@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Cadastro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+            color: white;
+            padding: 30px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo svg {
+            width: 40px;
+            height: 40px;
+            fill: #1976d2;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .form-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .form-header p {
+            color: #bbdefb;
+            font-size: 16px;
+        }
+
+        form {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #1976d2;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+        }
+
+        input.error {
+            border-color: #f44336;
+        }
+
+        .error-message {
+            color: #f44336;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(25, 118, 210, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            background: #4caf50;
+        }
+
+        .toast.error {
+            background: #f44336;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+
+            .form-header h2 {
+                font-size: 24px;
+            }
+
+            form {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabeçalho com Logo -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <!-- Substitua este SVG pela sua logo -->
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+                </svg>
+            </div>
+            <h1>Formulário de Cadastro</h1>
+        </div>
+    </header>
+
+    <!-- Container do Formulário -->
+    <div class="container">
+        <div class="form-card">
+            <div class="form-header">
+                <h2>Complete seu cadastro</h2>
+                <p>Preencha os dados abaixo para criar sua conta</p>
+            </div>
+
+            <form id="cadastroForm">
+                <!-- Nome -->
+                <div class="form-group">
+                    <label for="nome">Nome Completo *</label>
+                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo">
+                    <div class="error-message" id="nomeError"></div>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" placeholder="seu@email.com">
+                    <div class="error-message" id="emailError"></div>
+                </div>
+
+                <!-- Telefone -->
+                <div class="form-group">
+                    <label for="telefone">Telefone *</label>
+                    <input type="tel" id="telefone" name="telefone" placeholder="(11) 98765-4321">
+                    <div class="error-message" id="telefoneError"></div>
+                </div>
+
+                <!-- Senha -->
+                <div class="form-group">
+                    <label for="senha">Senha *</label>
+                    <input type="password" id="senha" name="senha" placeholder="Mínimo 6 caracteres">
+                    <div class="error-message" id="senhaError"></div>
+                </div>
+
+                <!-- Confirmar Senha -->
+                <div class="form-group">
+                    <label for="confirmarSenha">Confirmar Senha *</label>
+                    <input type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Digite a senha novamente">
+                    <div class="error-message" id="confirmarSenhaError"></div>
+                </div>
+
+                <!-- Botão Submit -->
+                <button type="submit" id="submitBtn">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // Elementos do formulário
+        const form = document.getElementById('cadastroForm');
+        const inputs = {
+            nome: document.getElementById('nome'),
+            email: document.getElementById('email'),
+            telefone: document.getElementById('telefone'),
+            senha: document.getElementById('senha'),
+            confirmarSenha: document.getElementById('confirmarSenha')
+        };
+        const submitBtn = document.getElementById('submitBtn');
+        const toast = document.getElementById('toast');
+
+        // Função para mostrar toast
+        function showToast(message, type) {
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Função para mostrar erro
+        function showError(fieldName, message) {
+            const input = inputs[fieldName];
+            const errorDiv = document.getElementById(`${fieldName}Error`);
+            input.classList.add('error');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+        }
+
+        // Função para limpar erro
+        function clearError(fieldName) {
+            const input = inputs[fieldName];
+            const errorDiv = document.getElementById(`${fieldName}Error`);
+            input.classList.remove('error');
+            errorDiv.classList.remove('show');
+        }
+
+        // Limpar erros ao digitar
+        Object.keys(inputs).forEach(fieldName => {
+            inputs[fieldName].addEventListener('input', () => {
+                clearError(fieldName);
+            });
+        });
+
+        // Validação do formulário
+        function validateForm() {
+            let isValid = true;
+
+            // Limpar todos os erros
+            Object.keys(inputs).forEach(clearError);
+
+            // Validar nome
+            if (!inputs.nome.value.trim()) {
+                showError('nome', 'Nome é obrigatório');
+                isValid = false;
+            } else if (inputs.nome.value.trim().length < 3) {
+                showError('nome', 'Nome deve ter pelo menos 3 caracteres');
+                isValid = false;
+            }
+
+            // Validar email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!inputs.email.value.trim()) {
+                showError('email', 'Email é obrigatório');
+                isValid = false;
+            } else if (!emailRegex.test(inputs.email.value)) {
+                showError('email', 'Email inválido');
+                isValid = false;
+            }
+
+            // Validar telefone
+            const telefoneRegex = /^\d{10,11}$/;
+            const telefoneLimpo = inputs.telefone.value.replace(/\D/g, '');
+            if (!inputs.telefone.value.trim()) {
+                showError('telefone', 'Telefone é obrigatório');
+                isValid = false;
+            } else if (!telefoneRegex.test(telefoneLimpo)) {
+                showError('telefone', 'Telefone deve ter 10 ou 11 dígitos');
+                isValid = false;
+            }
+
+            // Validar senha
+            if (!inputs.senha.value) {
+                showError('senha', 'Senha é obrigatória');
+                isValid = false;
+            } else if (inputs.senha.value.length < 6) {
+                showError('senha', 'Senha deve ter pelo menos 6 caracteres');
+                isValid = false;
+            }
+
+            // Validar confirmação de senha
+            if (!inputs.confirmarSenha.value) {
+                showError('confirmarSenha', 'Confirmação de senha é obrigatória');
+                isValid = false;
+            } else if (inputs.senha.value !== inputs.confirmarSenha.value) {
+                showError('confirmarSenha', 'As senhas não coincidem');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        // Submit do formulário
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            if (!validateForm()) {
+                showToast('Por favor, corrija os erros no formulário', 'error');
+                return;
+            }
+
+            // Desabilitar botão
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Cadastrando...';
+
+            // Simular envio
+            setTimeout(() => {
+                showToast('Cadastro realizado com sucesso!', 'success');
+                form.reset();
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Cadastrar';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
