@@ -1,0 +1,964 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="https://lumi.new/lumi.ing/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FUT RJ - Notícias do Futebol Carioca</title>
+    <meta name="description" content="Notícias do futebol carioca - FUT RJ">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Light mode (default) */
+        body {
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+
+        /* Dark mode */
+        body.dark {
+            background-color: #111827;
+            color: #f9fafb;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Top bar */
+        .top-bar {
+            background-color: #9ca3af;
+            color: #4b5563;
+            font-size: 0.75rem;
+            padding: 0.25rem 1rem;
+        }
+
+        body.dark .top-bar {
+            background-color: #374151;
+            color: #d1d5db;
+        }
+
+        /* Header */
+        .header {
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        body.dark .header {
+            background-color: #1f2937;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4rem;
+            padding: 0 1rem;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: #4b5563;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-item:hover {
+            color: #1f2937;
+        }
+
+        body.dark .nav-item {
+            color: #d1d5db;
+        }
+
+        body.dark .nav-item:hover {
+            color: #f9fafb;
+        }
+
+        .logo-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo {
+            width: 7rem;
+            height: auto;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .dark-toggle {
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            background-color: #e5e7eb;
+            color: #4b5563;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dark-toggle:hover {
+            background-color: #d1d5db;
+        }
+
+        body.dark .dark-toggle {
+            background-color: #374151;
+            color: #d1d5db;
+        }
+
+        body.dark .dark-toggle:hover {
+            background-color: #4b5563;
+        }
+
+        .btn-register {
+            background-color: #fbbf24;
+            color: black;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-register:hover {
+            background-color: #f59e0b;
+        }
+
+        .user-avatar {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .user-avatar:hover {
+            background-color: #f0f0f0;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            stroke: #333;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        /* Main content */
+        .main {
+            padding: 2rem 1rem;
+        }
+
+        .section-title {
+            font-size: 1.875rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 2rem;
+        }
+
+        body.dark .section-title {
+            color: #f9fafb;
+        }
+
+        /* News grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 1024px) {
+            .news-grid {
+                grid-template-columns: 1fr 2fr;
+            }
+        }
+
+        .main-news {
+            position: relative;
+            background-color: black;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            height: 20rem;
+        }
+
+        .news-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+        }
+
+        .news-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        }
+
+        .news-title {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: bold;
+            line-height: 1.3;
+        }
+
+        .secondary-news {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .secondary-news {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .news-card {
+            position: relative;
+            background-color: black;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            height: 9rem;
+        }
+
+        .news-card-title {
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+
+        .news-tag {
+            background-color: #dc2626;
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        /* Results grid */
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .results-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .results-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        .match-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        body.dark .match-card {
+            background-color: #1f2937;
+            border-color: #374151;
+        }
+
+        .team-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .team-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .team-logo {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+        }
+
+        .team-name {
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        body.dark .team-name {
+            color: #e5e7eb;
+        }
+
+        .score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        body.dark .score {
+            color: #e5e7eb;
+        }
+
+        .vs-divider {
+            text-align: center;
+            color: #9ca3af;
+            font-size: 0.875rem;
+            margin: 0.5rem 0;
+        }
+
+        body.dark .vs-divider {
+            color: #6b7280;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: white;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 4rem;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        body.dark .footer {
+            background-color: #1f2937;
+            border-color: #374151;
+        }
+
+        .footer-content {
+            padding: 2rem 1rem;
+        }
+
+        .footer-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .footer-copyright {
+            color: #4b5563;
+            font-size: 0.875rem;
+        }
+
+        body.dark .footer-copyright {
+            color: #9ca3af;
+        }
+
+        .social-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: #4b5563;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .social-icon:hover {
+            color: #dc2626;
+        }
+
+        body.dark .social-icon {
+            color: #9ca3af;
+        }
+
+        body.dark .social-icon:hover {
+            color: #ef4444;
+        }
+
+        .footer-made-with {
+            text-align: center;
+            color: #9ca3af;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        body.dark .footer-made-with {
+            color: #6b7280;
+        }
+
+        .whimsical-logo {
+            width: 1rem;
+            height: 1rem;
+            background-color: #9ca3af;
+            transform: rotate(45deg);
+        }
+
+        body.dark .whimsical-logo {
+            background-color: #6b7280;
+        }
+
+        /* Icons */
+        .icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .icon-small {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        /* Hidden class for dark mode toggle */
+        .hidden {
+            display: none;
+        }
+
+        /* Menu suspenso de times - MELHORADO */
+        .times-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            min-width: 180px;
+            opacity: 1;
+            visibility: visible;
+            transition: all 0.2s ease;
+        }
+
+        .times-dropdown.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-50%) translateY(-10px);
+        }
+
+        .times-dropdown::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-bottom: none;
+            border-right: none;
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        body.dark .times-dropdown::before {
+            background: #1f2937;
+            border-color: #374151;
+        }
+
+        .team-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .team-item:hover {
+            background-color: #f3f4f6;
+            transform: translateY(-2px);
+        }
+
+        body.dark .team-item:hover {
+            background-color: #374151;
+        }
+
+        .team-item img {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 0.25rem;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .team-item:hover img {
+            border-color: #dc2626;
+            transform: scale(1.05);
+        }
+
+        .team-name-dropdown {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #4b5563;
+            text-align: center;
+        }
+
+        body.dark .team-name-dropdown {
+            color: #d1d5db;
+        }
+
+        body.dark .times-dropdown {
+            background: #1f2937;
+            border-color: #374151;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                height: auto;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .nav-left {
+                order: 3;
+                gap: 1rem;
+            }
+
+            .logo-container {
+                order: 1;
+                flex: none;
+            }
+
+            .header-right {
+                order: 2;
+                flex: none;
+            }
+
+            .footer-main {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .times-dropdown {
+                min-width: 160px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top bar -->
+    <div class="top-bar">
+        SITE
+    </div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                
+                <div class="nav-left">
+                    <a href="#" class="nav-item">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                        <span>TABELA</span>
+                    </a>
+                    <div class="nav-item" id="timesMenuBtn" style="position: relative;">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12,6 12,12 16,14"></polyline>
+                        </svg>
+                        <span>TIMES</span>
+
+                        <!-- Menu de times melhorado -->
+                        <div class="times-dropdown hidden" id="timesDropdown">
+                            <a href="#" class="team-item">
+                                <img src="https://escudosfc.com.br/images/vasco.png" alt="Vasco" />
+                                <span class="team-name-dropdown">Vasco</span>
+                            </a>
+                            <a href="#" class="team-item">
+                                <img src="https://escudosfc.com.br/images/flamengo.png" alt="Flamengo" />
+                                <span class="team-name-dropdown">Flamengo</span>
+                            </a>
+                            <a href="#" class="team-item">
+                                <img src="https://escudosfc.com.br/images/fluminense.png" alt="Fluminense" />
+                                <span class="team-name-dropdown">Fluminense</span>
+                            </a>
+                            <a href="#" class="team-item">
+                                <img src="https://escudosfc.com.br/images/botafogo.gif" alt="Botafogo" />
+                                <span class="team-name-dropdown">Botafogo</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logo -->
+                <div class="logo-container">
+                    <img 
+                        src="https://i.postimg.cc/zv8J9sSP/FUT-RJ-removebg-preview.png"
+                        alt="Escudo Site"
+                        class="logo"
+                    />
+                </div>
+
+                <!-- Right side -->
+                <div class="header-right">
+                    <!-- Dark mode toggle -->
+                    <button id="darkToggle" class="dark-toggle" aria-label="Alternar modo escuro">
+                        <!-- Moon icon (shown in light mode) -->
+                        <svg id="moonIcon" class="icon" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                        <!-- Sun icon (shown in dark mode) -->
+                        <svg id="sunIcon" class="icon hidden" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <path d="m15.91 11.672 1.45-1.45c.431-.431.431-1.129 0-1.56-.431-.431-1.129-.431-1.56 0l-1.45 1.45m-10.182 0-1.45-1.45c-.431-.431-.431-1.129 0-1.56.431-.431 1.129-.431 1.56 0l1.45 1.45m9.318 10.182 1.45 1.45c.431.431.431 1.129 0 1.56-.431.431 1.129.431 1.56 0l-1.45-1.45m-10.182 0-1.45 1.45c-.431.431-.431 1.129 0 1.56.431.431 1.129.431 1.56 0l1.45-1.45M8 12a4 4 0 1 0 8 0 4 4 0 0 0-8 0Z"></path>
+                        </svg>
+                    </button>
+                    
+                    <a href="#" class="btn-register">CADASTRE-SE</a>
+                    <a href="entrar.html" class="user-avatar">
+                        <svg class="icon icon-small" viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="main container">
+        
+        <!-- News section -->
+        <section>
+            <h2 class="section-title">NOTÍCIAS DA SEMANA NO RJ</h2>
+            
+            <div class="news-grid">
+                
+                <!-- Main news -->
+                <div class="main-news">
+                    <img 
+                        src='https://lncimg.lance.com.br/cdn-cgi/image/width=1280,height=720,quality=75,fit=cover,format=webp/uploads/2024/12/Arrascaeta-Flamengo-aspect-ratio-512-320.jpg'
+                        alt="Arrascaeta Flamengo"
+                        class="news-image"
+                    />
+                    <div class="news-overlay">
+                        <h3 class="news-title">
+                            Arrascaeta lamenta "pequenos detalhes" que custaram a vitória do Flamengo
+                        </h3>
+                    </div>
+                </div>
+
+                <!-- Secondary news -->
+                <div class="secondary-news">
+                    
+                    <div class="news-card">
+                        <img 
+                            src='https://sportbuzz.com.br/wp-content/uploads/2025/09/esse-86-750x375.jpg'
+                            alt="Fluminense vs Santos"
+                            class="news-image"
+                        />
+                        <div class="news-overlay">
+                            <h4 class="news-card-title">
+                                Thiago Silva valoriza empate do Fluminense contra o Santos na Vila
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div class="news-card">
+                        <img 
+                            src="https://ds-images.bolavip.com/news/image?src=https://images.antenadosnofutebol.com.br/webp/full/ANF_20250909_ANF_317652_AGIF25083019130462-scaled-e1756845221549-1024x577_c2723074.webp&width=1024&height=577" 
+                            alt="Botafogo player"
+                            class="news-image"
+                        />
+                        <div class="news-overlay">
+                            <h4 class="news-card-title">
+                                Ex-Palmeiras, Danilo tem melhor atuação pelo Botafogo
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div class="news-card">
+                        <img 
+                            src="https://vasconoticias.com.br/wp-content/uploads/2025/08/diniz-vasco-x-corinthians-sao-januario.jpg" 
+                            alt="Vasco celebration"
+                            class="news-image"
+                        />
+                        <div class="news-overlay">
+                            <h4 class="news-card-title">
+                                Diniz celebra vitória do Vasco e mira duelo com o Botafogo: "Adversário muito forte"
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div class="news-card">
+                        <img 
+                            src="https://images.pexels.com/photos/274506/pexels-photo-274506.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                            alt="Player departure"
+                            class="news-image"
+                        />
+                        <div class="news-overlay">
+                            <div class="news-tag">De saída</div>
+                            <h4 class="news-card-title">
+                                Cuiabano acerta com o Nottingham Forest e deixa Botafogo: "Até logo"
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results section -->
+        <section>
+            <h2 class="section-title">RESULTADOS DA SEMANA</h2>
+            
+            <div class="results-grid">
+                
+                <!-- Match 1 -->
+                <div class="match-card">
+                    <div class="team-row">
+                        <div class="team-info">
+                            <img src="https://escudosfc.com.br/images/fla.png" alt="Escudo Flamengo" class="team-logo" />
+                            <div class="team-name">Flamengo</div>
+                        </div>
+                        <div class="score">1</div>
+                    </div>
+                    <div class="vs-divider">X</div>
+                    <div class="team-row">
+                        <div class="team-info">
+                            <img src="https://escudosfc.com.br/images/gremio.png" alt="Escudo Grêmio" class="team-logo" />
+                            <div class="team-name">Grêmio</div>
+                        </div>
+                        <div class="score">1</div>
+                    </div>
+                </div>
+
+                <!-- Match 2 -->
+                <div class="match-card">
+                    <div class="team-row">
+                        <div class="team-info">
+                            <img src="https://escudosfc.com.br/images/sport.gif" alt="Escudo sport" class="team-logo" />
+                            <div class="team-name">Sport</div>
+                        </div>
+                        <div class="score">2</div>
+                    </div>
+                    <div class="vs-divider">X</div>
+                    <div class="team-row">
+                        <div class="team-info">
+                            <img src="https://escudosfc.com.br/images/vasco.png" alt="Escudo vasco" class="team-logo" />
+                            <div class="team-name">Vasco</div>
+                        </div>
+                        <div class="score">3</div>
+                    </div>
+                </div>
+
+                <!-- Match 3 -->
+                <div class="match-card">
+                    <div class="team-row">
+                        <div class="team-info">
+                            <img src="https://escudosfc.com.br/images/santos.png" alt="Escudo Santos" class="team-logo" />
+                            <div class="team-name">Santos</div>
+                        </div>
+                        <div class="score">0</div>
+                    </div>
+                    <div class="vs-divider">X</div>
+                    <div class="team-row">
+                        <div class="team-info">
+                            <img src="https://escudosfc.com.br/images/fluminense.png" alt="Escudo fluminense" class="team-logo" />
+                            <div class="team-name">Fluminense</div>
+                        </div>
+                        <div class="score">0</div>
+                    </div>
+                </div>
+
+                <!-- Match 4 -->
+                <div class="match-card">
+                    <div class="team-row">
+                        <div class="team-info">
+                            <img src="https://escudosfc.com.br/images/botafogo.gif" alt="Escudo Botafogo" class="team-logo" />
+                            <div class="team-name">Botafogo</div>
+                        </div>
+                        <div class="score">4</div>
+                    </div>
+                    <div class="vs-divider">X</div>
+                    <div class="team-row">
+                        <div class="team-info">
+                            <img src="https://escudosfc.com.br/images/bragantino.png" alt="Escudo Red bull bragantino" class="team-logo" />
+                            <div class="team-name">Red Bull Bragantino</div>
+                        </div>
+                        <div class="score">1</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    
+                    <div class="footer-copyright">
+                        © 2025 FUT RJ
+                    </div>
+                    
+                    <div class="social-links">
+                        <!-- YouTube -->
+                        <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                        <!-- Facebook -->
+                        <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                        <!-- Pinterest -->
+                        <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.748-1.378 0 0-.599 2.282-.744 2.840-.282 1.084-1.064 2.456-1.549 3.235C9.584 23.815 10.77 24.001 12.017 24.001c6.624 0 11.99-5.367 11.99-11.987C24.007 5.367 18.641.001 12.017.001z"/>
+                        </svg>
+                        <!-- Twitter/X -->
+                        <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="footer-made-with">
+                    <span>Made with</span>
+                    <div class="whimsical-logo"></div>
+                    <span>Whimsical</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dark mode toggle functionality
+        const darkToggle = document.getElementById('darkToggle');
+        const moonIcon = document.getElementById('moonIcon');
+        const sunIcon = document.getElementById('sunIcon');
+        const body = document.body;
+
+        // Check for saved dark mode preference or default to light mode
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        
+        if (isDarkMode) {
+            body.classList.add('dark');
+            moonIcon.classList.add('hidden');
+            sunIcon.classList.remove('hidden');
+        }
+
+        darkToggle.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            
+            if (body.classList.contains('dark')) {
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+                localStorage.setItem('darkMode', 'true');
+            } else {
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+                localStorage.setItem('darkMode', 'false');
+            }
+        });
+
+        // Times menu functionality - CORRIGIDO
+        const timesMenuBtn = document.getElementById('timesMenuBtn');
+        const timesDropdown = document.getElementById('timesDropdown');
+        let isMenuOpen = false;
+
+        // Toggle do menu
+        timesMenuBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            isMenuOpen = !isMenuOpen;
+            
+            if (isMenuOpen) {
+                timesDropdown.classList.remove('hidden');
+            } else {
+                timesDropdown.classList.add('hidden');
+            }
+        });
+
+        // Fechar menu quando clicar fora
+        document.addEventListener('click', (e) => {
+            if (!timesMenuBtn.contains(e.target) && !timesDropdown.contains(e.target)) {
+                timesDropdown.classList.add('hidden');
+                isMenuOpen = false;
+            }
+        });
+
+        // Fechar menu ao pressionar ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isMenuOpen) {
+                timesDropdown.classList.add('hidden');
+                isMenuOpen = false;
+            }
+        });
+
+        // Funcionalidade dos links dos times
+        document.querySelectorAll('.team-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const teamName = item.querySelector('.team-name-dropdown').textContent;
+                console.log(`Navegando para página do ${teamName}`);
+                // Fechar menu após clicar em um time
+                timesDropdown.classList.add('hidden');
+                isMenuOpen = false;
+            });
+        });
+    </script>
+</body>
+</html>
