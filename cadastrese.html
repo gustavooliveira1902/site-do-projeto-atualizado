@@ -1,403 +1,1537 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Cadastro</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FUT RJ - Notícias do Futebol Carioca</title>
+  <link rel="icon" href="https://lumi.new/lumi.ing/logo.png" />
+  <style>
+    
+    
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            min-height: 100vh;
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      transition: background-color 0.3s, color 0.3s;
+      background-color: #f3f4f6;
+      color: #1f2937;
+      position: relative;
+    }
 
-        header {
-            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
-            color: white;
-            padding: 30px 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+    body.dark {
+      background-color: #111827;
+      color: #f9fafb;
+    }
 
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-        }
+    /* Top bar */
+    .top-bar {
+      background-color: #9ca3af;
+      color: #4b5563;
+      font-size: 0.75rem;
+      padding: 0.25rem 1rem;
+    }
 
-        .logo {
-            width: 70px;
-            height: 70px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
+    body.dark .top-bar {
+      background-color: #374151;
+      color: #d1d5db;
+    }
 
-        .logo svg {
-            width: 40px;
-            height: 40px;
-            fill: #1976d2;
-        }
+    /* Header */
+    .header {
+      background-color: white;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s;
+      z-index: 20;
+      position: relative;
+    }
 
-        h1 {
-            font-size: 32px;
-            font-weight: bold;
-        }
+    body.dark .header {
+      background-color: #1f2937;
+    }
 
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 0 20px;
-        }
+    .header-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      gap: 1rem;
+    }
 
-        .form-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
-        }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
 
-        .form-header {
-            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
-            padding: 30px;
-            text-align: center;
-            color: white;
-        }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: #4b5563;
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color 0.2s;
+      position: relative;
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 0.875rem;
+    }
 
-        .form-header h2 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
+    .nav-item:hover {
+      color: #1f2937;
+    }
 
-        .form-header p {
-            color: #bbdefb;
-            font-size: 16px;
-        }
+    body.dark .nav-item {
+      color: #d1d5db;
+    }
 
-        form {
-            padding: 40px;
-        }
+    body.dark .nav-item:hover {
+      color: #f9fafb;
+    }
 
-        .form-group {
-            margin-bottom: 25px;
-        }
+    .logo-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
 
-        label {
-            display: block;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
+    .logo {
+      width: 7rem;
+      height: auto;
+    }
 
-        input {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
 
-        input:focus {
-            outline: none;
-            border-color: #1976d2;
-            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
-        }
+    .dark-toggle {
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      background-color: #e5e7eb;
+      color: #4b5563;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        input.error {
-            border-color: #f44336;
-        }
+    .dark-toggle:hover {
+      background-color: #d1d5db;
+    }
 
-        .error-message {
-            color: #f44336;
-            font-size: 13px;
-            margin-top: 5px;
-            display: none;
-        }
+    body.dark .dark-toggle {
+      background-color: #374151;
+      color: #d1d5db;
+    }
 
-        .error-message.show {
-            display: block;
-        }
+    body.dark .dark-toggle:hover {
+      background-color: #4b5563;
+    }
 
-        button {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
-        }
+    .btn-register {
+      background-color: #fbbf24;
+      color: black;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background-color 0.2s;
+      border: none;
+      cursor: pointer;
+      font-size: 0.875rem;
+      white-space: nowrap;
+    }
 
-        button:hover {
-            background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(25, 118, 210, 0.4);
-        }
+    .btn-register:hover {
+      background-color: #f59e0b;
+    }
 
-        button:active {
-            transform: translateY(0);
-        }
+    .btn-login {
+      background-color: transparent;
+      color: #1f2937;
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.375rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background-color 0.2s;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-size: 0.875rem;
+      white-space: nowrap;
+    }
 
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
+    .btn-login:hover {
+      background-color: #e5e7eb;
+    }
 
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 16px 24px;
-            border-radius: 10px;
-            color: white;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transform: translateX(400px);
-            transition: transform 0.3s;
-            z-index: 1000;
-        }
+    body.dark .btn-login {
+      color: #d1d5db;
+    }
 
-        .toast.show {
-            transform: translateX(0);
-        }
+    body.dark .btn-login:hover {
+      background-color: #374151;
+    }
 
-        .toast.success {
-            background: #4caf50;
-        }
+    .user-avatar {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 50%;
+      transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+    }
 
-        .toast.error {
-            background: #f44336;
-        }
+    .user-avatar:hover {
+      background-color: #f3f4f6;
+    }
 
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 24px;
-            }
+    body.dark .user-avatar:hover {
+      background-color: #374151;
+    }
 
-            .logo {
-                width: 60px;
-                height: 60px;
-            }
+    .icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
 
-            .form-header h2 {
-                font-size: 24px;
-            }
+    /* Times dropdown */
+    .times-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+      min-width: 180px;
+      margin-top: 0.5rem;
+    }
 
-            form {
-                padding: 30px 20px;
-            }
-        }
-    </style>
+    .times-dropdown.hidden {
+      display: none;
+    }
+
+    .times-dropdown::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 12px;
+      height: 12px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-bottom: none;
+      border-right: none;
+    }
+
+    body.dark .times-dropdown {
+      background: #1f2937;
+      border-color: #374151;
+    }
+
+    body.dark .times-dropdown::before {
+      background: #1f2937;
+      border-color: #374151;
+    }
+
+    .team-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .team-item:hover {
+      background-color: #f3f4f6;
+      transform: translateY(-2px);
+    }
+
+    body.dark .team-item:hover {
+      background-color: #374151;
+    }
+
+    .team-item img {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 0.25rem;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .team-item:hover img {
+      border-color: #dc2626;
+      transform: scale(1.05);
+    }
+
+    .team-name-dropdown {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #4b5563;
+      text-align: center;
+    }
+
+    body.dark .team-name-dropdown {
+      color: #d1d5db;
+    }
+
+    /* Sidebar Tabela */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -320px;
+      width: 320px;
+      max-width: 90vw;
+      height: 100%;
+      background-color: white;
+      box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+      transition: right 0.3s;
+      padding: 1rem;
+      overflow-y: auto;
+      z-index: 30;
+    }
+
+    body.dark .sidebar {
+      background-color: #1f2937;
+      color: #f9fafb;
+    }
+
+    .sidebar.open {
+      right: 0;
+    }
+
+    .sidebar h3 {
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+
+    .table-list {
+      list-style: none;
+    }
+
+    .table-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 0.95rem;
+    }
+
+    body.dark .table-list li {
+      border-color: #374151;
+    }
+
+    /* Main content */
+    .main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+
+    .section-title {
+      font-size: 1.875rem;
+      font-weight: bold;
+      color: #1f2937;
+      margin-bottom: 2rem;
+    }
+
+    body.dark .section-title {
+      color: #f9fafb;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    @media (min-width: 1024px) {
+      .news-grid {
+        grid-template-columns: 1fr 2fr;
+      }
+    }
+
+    .main-news {
+      position: relative;
+      background-color: black;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      height: 20rem;
+      cursor: pointer;
+    }
+
+    .news-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+
+    .main-news:hover .news-image,
+    .news-card:hover .news-image {
+      opacity: 0.9;
+    }
+
+    .news-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+      background: linear-gradient(to top,
+        rgba(0, 0, 0, 0.8), transparent);
+    }
+
+    .news-title {
+      color: white;
+      font-size: 1.25rem;
+      font-weight: bold;
+      line-height: 1.3;
+    }
+
+    .secondary-news {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .secondary-news {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .news-card {
+      position: relative;
+      background-color: black;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      height: 9rem;
+      cursor: pointer;
+    }
+
+    .news-card-title {
+      color: white;
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .news-tag {
+      background-color: #dc2626;
+      color: white;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .results-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .results-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    .match-card {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e5e7eb;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    body.dark .match-card {
+      background-color: #1f2937;
+      border-color: #374151;
+    }
+
+    .team-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .team-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .team-logo {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+    }
+
+    .team-name {
+      font-weight: 500;
+      color: #1f2937;
+    }
+
+    body.dark .team-name {
+      color: #e5e7eb;
+    }
+
+    .score {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #1f2937;
+    }
+
+    body.dark .score {
+      color: #e5e7eb;
+    }
+
+    .vs-divider {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 0.875rem;
+      margin: 0.5rem 0;
+    }
+
+    body.dark .vs-divider {
+      color: #6b7280;
+    }
+
+    /* Modal (forms) */
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(15, 23, 42, 0.6);
+      z-index: 50;
+      padding: 1rem;
+    }
+
+    .modal.hidden {
+      display: none;
+    }
+
+    .modal-card {
+      background: white;
+      border-radius: 0.5rem;
+      width: 100%;
+      max-width: 520px;
+      padding: 1.25rem;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.2);
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    body.dark .modal-card {
+      background: #0b1220;
+      color: #f9fafb;
+    }
+
+    .modal-card h3 {
+      margin-bottom: 0.75rem;
+      font-size: 1.125rem;
+    }
+
+    .modal-close {
+      position: absolute;
+      right: 0.5rem;
+      top: 0.5rem;
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+      color: inherit;
+      z-index: 1;
+    }
+
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .form-row label {
+      font-size: 0.875rem;
+      color: #374151;
+    }
+
+    body.dark .form-row label {
+      color: #d1d5db;
+    }
+
+    .form-row input,
+    .form-row textarea {
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.375rem;
+      border: 1px solid #e5e7eb;
+      font-size: 0.95rem;
+      outline: none;
+      background: white;
+      color: inherit;
+    }
+
+    body.dark .form-row input,
+    body.dark .form-row textarea {
+      background: #0b1220;
+      border-color: #374151;
+      color: #f9fafb;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background-color: #ef4444;
+      color: white;
+      padding: 0.5rem 0.9rem;
+      border-radius: 0.375rem;
+      border: none;
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #e5e7eb;
+      color: #374151;
+      padding: 0.45rem 0.8rem;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+
+    body.dark .btn-secondary {
+      border-color: #374151;
+      color: #d1d5db;
+    }
+
+    .success-message {
+      display: none;
+      padding: 0.75rem;
+      background: #ecfdf5;
+      border: 1px solid #10b981;
+      color: #065f46;
+      border-radius: 0.375rem;
+      margin-top: 0.5rem;
+    }
+
+    body.dark .success-message {
+      background: rgba(16,185,129,0.08);
+      color: #34d399;
+      border-color: rgba(16,185,129,0.25);
+    }
+
+    .footer {
+      background-color: white;
+      border-top: 1px solid #e5e7eb;
+      margin-top: 4rem;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    body.dark .footer {
+      background-color: #1f2937;
+      border-color: #374151;
+    }
+
+    .footer-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .footer-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-copyright {
+      color: #4b5563;
+      font-size: 0.875rem;
+    }
+
+    body.dark .footer-copyright {
+      color: #9ca3af;
+    }
+
+    .social-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .social-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      color: #4b5563;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .social-icon:hover {
+      color: #dc2626;
+    }
+
+    body.dark .social-icon {
+      color: #9ca3af;
+    }
+
+    body.dark .social-icon:hover {
+      color: #ef4444;
+    }
+
+    .footer-made-with {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    body.dark .footer-made-with {
+      color: #6b7280;
+    }
+
+    .whimsical-logo {
+      width: 1rem;
+      height: 1rem;
+      background-color: #9ca3af;
+      transform: rotate(45deg);
+    }
+
+    body.dark .whimsical-logo {
+      background-color: #6b7280;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Mobile Responsiveness Improvements */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        height: auto;
+        gap: 1rem;
+        padding: 0.75rem;
+      }
+
+      .nav-left {
+        order: 3;
+        gap: 1rem;
+        width: 100%;
+        justify-content: space-around;
+      }
+
+      .nav-item {
+        font-size: 0.75rem;
+      }
+
+      .nav-item span {
+        display: none;
+      }
+
+      .logo-container {
+        order: 1;
+        flex: none;
+      }
+
+      .logo {
+        width: 5rem;
+      }
+
+      .header-right {
+        order: 2;
+        flex: none;
+      }
+
+      .btn-register,
+      .btn-login {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.75rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .main-news {
+        height: 16rem;
+      }
+
+      .news-title {
+        font-size: 1rem;
+      }
+
+      .news-card {
+        height: 10rem;
+      }
+
+      .news-overlay {
+        padding: 1rem;
+      }
+
+      .match-card {
+        padding: 0.75rem;
+      }
+
+      .team-name {
+        font-size: 0.875rem;
+      }
+
+      .score {
+        font-size: 1.25rem;
+      }
+
+      .footer-main {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .times-dropdown {
+        left: auto;
+        right: 0;
+        transform: none;
+        min-width: 160px;
+      }
+
+      .times-dropdown::before {
+        left: auto;
+        right: 1rem;
+        transform: rotate(45deg);
+      }
+
+      .sidebar {
+        width: 280px;
+      }
+
+      .main {
+        padding: 1.5rem 0.75rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-left {
+        gap: 0.5rem;
+      }
+
+      .header-right {
+        gap: 0.5rem;
+      }
+
+      .btn-register {
+        display: none;
+      }
+
+      .section-title {
+        font-size: 1.25rem;
+      }
+
+      .news-card-title {
+        font-size: 0.75rem;
+      }
+
+      .team-info {
+        gap: 0.5rem;
+      }
+
+      .team-logo {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+
+      .team-name {
+        font-size: 0.75rem;
+      }
+
+      .modal-card {
+        padding: 1rem;
+      }
+
+      .form-row input,
+      .form-row textarea {
+        font-size: 0.875rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Cabeçalho com Logo -->
-    <header>
-        <div class="header-content">
-            <div class="logo">
-                <!-- Substitua este SVG pela sua logo -->
-                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
-                </svg>
-            </div>
-            <h1>Formulário de Cadastro</h1>
+<script>
+  // 1️⃣ Pergunta o nome do usuário
+  const nome = prompt("Qual é o seu nome?");
+
+  if (nome) {
+    alert("Olá, " + nome + "! Bem-vindo ao FUT RJ!");
+  } else {
+    alert("Bem-vindo ao FUT RJ!");
+  }
+
+  // 2️⃣ Pergunta o time do coração
+  let time = prompt("Qual é o seu time do coração? (Flamengo, Vasco, Fluminense, Botafogo)");
+  time = time ? time.trim() : "Nenhum";
+
+  // 3️⃣ Pergunta tipo de notícia preferida
+  let tipoNoticia = prompt("Qual tipo de notícia você quer ver? (Resultados, Transferências, Curiosidades)");
+  tipoNoticia = tipoNoticia ? tipoNoticia.trim() : "Geral";
+
+  // 4️⃣ Pergunta jogador favorito
+  let jogador = prompt("Qual é seu jogador favorito?");
+  jogador = jogador ? jogador.trim() : "Algum jogador";
+
+  // Exibe resumo das preferências do usuário
+  alert(
+    "Resumo da sua escolha:\n" +
+    "Nome: " + (nome || "Visitante") + "\n" +
+    "Time: " + time + "\n" +
+    "Tipo de notícia: " + tipoNoticia + "\n" +
+    "Jogador favorito: " + jogador + "\n\n" +
+    "Otimo! buscaremos mais informações para te deixar sempre por dentro das notícias do seu time do coração!"
+  );
+
+  // Aqui você poderia, por exemplo, filtrar notícias do site com base nessas respostas
+</script>
+
+    
+  <!-- Top bar -->
+  <div class="top-bar">SITE</div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <!-- Left Navigation -->
+      <nav class="nav-left">
+        <a href="#" class="nav-item" id="tabelaBtn">
+          <svg class="icon" viewBox="0 0 24 24">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+          <span>TABELA</span>
+        </a>
+
+        <div class="nav-item" id="timesMenuBtn" style="position: relative;">
+          <svg class="icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12,6 12,12 16,14"></polyline>
+          </svg>
+          <span>TIMES</span>
+
+          <!-- Times Dropdown -->
+          <div class="times-dropdown hidden" id="timesDropdown">
+            <a href="#" class="team-item">
+              <img src="https://escudosfc.com.br/images/vasco.png" alt="Vasco" />
+              <span class="team-name-dropdown">Vasco</span>
+            </a>
+            <a href="#" class="team-item">
+              <img src="https://escudosfc.com.br/images/flamengo.png" alt="Flamengo" />
+              <span class="team-name-dropdown">Flamengo</span>
+            </a>
+            <a href="#" class="team-item">
+              <img src="https://escudosfc.com.br/images/fluminense.png" alt="Fluminense" />
+              <span class="team-name-dropdown">Fluminense</span>
+            </a>
+            <a href="#" class="team-item">
+                
+              <img src="https://escudosfc.com.br/images/botafogo.gif" alt="Botafogo" />
+              <span class="team-name-dropdown">Botafogo</span>
+            </a>
+          </div>
         </div>
-    </header>
 
-    <!-- Container do Formulário -->
-    <div class="container">
-        <div class="form-card">
-            <div class="form-header">
-                <h2>Complete seu cadastro</h2>
-                <p>Preencha os dados abaixo para criar sua conta</p>
-            </div>
+        <a class="nav-item" id="contactBtn">
+          <svg class="icon" viewBox="0 0 24 24">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <span>CONTATO</span>
+        </a>
+      </nav>
 
-            <form id="cadastroForm">
-                <!-- Nome -->
-                <div class="form-group">
-                    <label for="nome">Nome Completo *</label>
-                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo">
-                    <div class="error-message" id="nomeError"></div>
-                </div>
+      <!-- Logo -->
+      <div class="logo-container">
+        <img src="https://i.postimg.cc/zv8J9sSP/FUT-RJ-removebg-preview.png" alt="FUT RJ Logo" class="logo" />
+      </div>
 
-                <!-- Email -->
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" placeholder="seu@email.com">
-                    <div class="error-message" id="emailError"></div>
-                </div>
+      <!-- Right Side -->
+      <div class="header-right">
+        <button id="darkToggle" class="dark-toggle" aria-label="Alternar modo escuro">
+          <svg id="moonIcon" class="icon" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg id="sunIcon" class="icon hidden" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
 
-                <!-- Telefone -->
-                <div class="form-group">
-                    <label for="telefone">Telefone *</label>
-                    <input type="tel" id="telefone" name="telefone" placeholder="(11) 98765-4321">
-                    <div class="error-message" id="telefoneError"></div>
-                </div>
+        <!-- Login button (ao lado do Cadastre-se) -->
+        <button id="loginBtn" class="btn-login">ENTRAR</button>
 
-                <!-- Senha -->
-                <div class="form-group">
-                    <label for="senha">Senha *</label>
-                    <input type="password" id="senha" name="senha" placeholder="Mínimo 6 caracteres">
-                    <div class="error-message" id="senhaError"></div>
-                </div>
+        <a href="#" id="registerBtn" class="btn-register">CADASTRE-SE</a>
 
-                <!-- Confirmar Senha -->
-                <div class="form-group">
-                    <label for="confirmarSenha">Confirmar Senha *</label>
-                    <input type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Digite a senha novamente">
-                    <div class="error-message" id="confirmarSenhaError"></div>
-                </div>
-
-                <!-- Botão Submit -->
-                <button type="submit" id="submitBtn">Cadastrar</button>
-            </form>
-        </div>
+        <a href="#" class="user-avatar">
+          <svg class="icon" viewBox="0 0 24 24">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+      </div>
     </div>
+  </header>
 
-    <!-- Toast Container -->
-    <div id="toast" class="toast"></div>
+  <!-- Sidebar da Tabela -->
+  <div class="sidebar" id="tabelaSidebar">
+    <h3>Classificação Brasileirão Série A</h3>
+    <ul class="table-list">
+      <!-- Dados atuais (exemplo para 2025) -->
+       <li><span>Flamengo</span><span>75</span></li>
+      <li><span>Palmeiras</span><span>70</span></li>
+      <li><span>Cruzeiro</span><span>69</span></li>
+      <li><span>Mirassol</span><span>64</span></li>
+      <li><span>Botafogo</span><span>59</span></li>
+      <li><span>Fluminense</span><span>58</span></li>
+      <li><span>Bahia</span><span>57</span></li>
+      <li><span>São Paulo</span><span>48</span></li>
+      <li><span>Vasco da Gama</span><span>46</span></li>
+      <li><span>Corinthians</span><span>46</span></li>
+      <li><span>Grêmio</span><span>46</span></li>
+      <li><span>Bragantino</span><span>45</span></li>
+      <li><span>Atlético-MG</span><span>45</span></li>
+      <li><span>Ceará</span><span>43</span></li>
+      <li><span>Vitória</span><span>42</span></li>
+      <li><span>Santos</span><span>41</span></li>
+      <li><span>Internacional</span><span>41</span></li>
+      <li><span>Fortaleza</span><span>40</span></li>
+      <li><span>Juventude</span><span>34</span></li>
+      <li><span>Sport</span><span>17</span></li>
+    </ul>
+  </div>
 
-    <script>
-        // Elementos do formulário
-        const form = document.getElementById('cadastroForm');
-        const inputs = {
-            nome: document.getElementById('nome'),
-            email: document.getElementById('email'),
-            telefone: document.getElementById('telefone'),
-            senha: document.getElementById('senha'),
-            confirmarSenha: document.getElementById('confirmarSenha')
-        };
-        const submitBtn = document.getElementById('submitBtn');
-        const toast = document.getElementById('toast');
+  <!-- Main Content -->
+  <main class="main">
+    <!-- News Section -->
+    <section style="margin-bottom: 3rem;">
+      <h2 class="section-title">NOTÍCIAS DA SEMANA NO RJ</h2>
+      
+      <div class="news-grid">
+        <!-- Main News -->
+        <div class="main-news">
+          <img src="https://lncimg.lance.com.br/cdn-cgi/image/width=1280,height=720,quality=75,fit=cover,format=webp/uploads/2024/12/Arrascaeta-Flamengo-aspect-ratio-512-320.jpg" alt="Arrascaeta Flamengo" class="news-image" />
+          <div class="news-overlay">
+            <h3 class="news-title">Arrascaeta lamenta "pequenos detalhes" que custaram a vitória do Flamengo</h3>
+          </div>
+        </div>
 
-        // Função para mostrar toast
-        function showToast(message, type) {
-            toast.textContent = message;
-            toast.className = `toast ${type} show`;
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
+        <!-- Secondary News -->
+        <div class="secondary-news">
+          <div class="news-card">
+            <img src="https://sportbuzz.com.br/wp-content/uploads/2025/09/esse-86-750x375.jpg" alt="Fluminense vs Santos" class="news-image" />
+            <div class="news-overlay">
+              <h4 class="news-card-title">Thiago Silva valoriza empate do Fluminense contra o Santos na Vila</h4>
+            </div>
+          </div>
 
-        // Função para mostrar erro
-        function showError(fieldName, message) {
-            const input = inputs[fieldName];
-            const errorDiv = document.getElementById(`${fieldName}Error`);
-            input.classList.add('error');
-            errorDiv.textContent = message;
-            errorDiv.classList.add('show');
-        }
+          <div class="news-card">
+            <img src="https://ds-images.bolavip.com/news/image?src=https://images.antenadosnofutebol.com.br/webp/full/ANF_20250909_ANF_317652_AGIF25083019130462-scaled-e1756845221549-1024x577_c2723074.webp&width=1024&height=577" alt="Botafogo player" class="news-image" />
+            <div class="news-overlay">
+              <h4 class="news-card-title">Ex-Palmeiras, Danilo tem melhor atuação pelo Botafogo</h4>
+            </div>
+          </div>
 
-        // Função para limpar erro
-        function clearError(fieldName) {
-            const input = inputs[fieldName];
-            const errorDiv = document.getElementById(`${fieldName}Error`);
-            input.classList.remove('error');
-            errorDiv.classList.remove('show');
-        }
+          <div class="news-card">
+            <img src="https://vasconoticias.com.br/wp-content/uploads/2025/08/diniz-vasco-x-corinthians-sao-januario.jpg" alt="Vasco celebration" class="news-image" />
+            <div class="news-overlay">
+              <h4 class="news-card-title">Diniz celebra vitória do Vasco e mira duelo com o Botafogo: "Adversário muito forte"</h4>
+            </div>
+          </div>
 
-        // Limpar erros ao digitar
-        Object.keys(inputs).forEach(fieldName => {
-            inputs[fieldName].addEventListener('input', () => {
-                clearError(fieldName);
-            });
+          <div class="news-card">
+            <img src="https://images.pexels.com/photos/274506/pexels-photo-274506.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Player departure" class="news-image" />
+            <div class="news-overlay">
+              <span class="news-tag">De saída</span>
+              <h4 class="news-card-title">Cuiabano acerta com o Nottingham Forest e deixa Botafogo: "Até logo"</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section>
+      <h2 class="section-title">RESULTADOS DA SEMANA</h2>
+      
+      <div class="results-grid">
+        <!-- Match 1 -->
+        <div class="match-card">
+          <div class="team-row">
+            <div class="team-info">
+              <img src="https://escudosfc.com.br/images/fla.png" alt="Flamengo" class="team-logo" />
+              <span class="team-name">Flamengo</span>
+            </div>
+            <span class="score">1</span>
+          </div>
+          <div class="vs-divider">X</div>
+          <div class="team-row">
+            <div class="team-info">
+              <img src="https://escudosfc.com.br/images/atletico.png" alt="Atlético-MG" class="team-logo" />
+              <span class="team-name">Atlético-MG</span>
+            </div>
+            <span class="score">1</span>
+          </div>
+        </div>
+
+        <!-- Match 2 -->
+        <div class="match-card">
+          <div class="team-row">
+            <div class="team-info">
+              <img src="https://escudosfc.com.br/images/internacional.gif" alt="Sport" class="team-logo" />
+              <span class="team-name">Internacional</span>
+            </div>
+            <span class="score">1</span>
+          </div>
+          <div class="vs-divider">X</div>
+          <div class="team-row">
+            <div class="team-info">
+              <img src="https://escudosfc.com.br/images/vasco.png" alt="Vasco" class="team-logo" />
+              <span class="team-name">Vasco</span>
+            </div>
+            <span class="score">5</span>
+          </div>
+        </div>
+
+        <!-- Match 3 -->
+        <div class="match-card">
+          <div class="team-row">
+            <div class="team-info">
+              <img src="https://escudosfc.com.br/images/saopaulo.png" alt="São Paulo" class="team-logo" />
+              <span class="team-name">São Paulo</span>
+            </div>
+            <span class="score">0</span>
+          </div>
+          <div class="vs-divider">X</div>
+          <div class="team-row">
+            <div class="team-info">
+              <img src="https://escudosfc.com.br/images/fluminense.png" alt="Fluminense" class="team-logo" />
+              <span class="team-name">Fluminense</span>
+            </div>
+            <span class="score">6</span>
+          </div>
+        </div>
+
+        <!-- Match 4 -->
+        <div class="match-card">
+          <div class="team-row">
+            <div class="team-info">
+              <img src="https://escudosfc.com.br/images/botafogo.gif" alt="Botafogo" class="team-logo" />
+              <span class="team-name">Botafogo</span>
+            </div>
+            <span class="score">2</span>
+          </div>
+          <div class="vs-divider">X</div>
+          <div class="team-row">
+            <div class="team-info">
+              <img src="https://escudosfc.com.br/images/corinthians.png" alt="Corinthians" class="team-logo" />
+              <span class="team-name">Corinthians</span>
+            </div>
+            <span class="score">2</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Contact Modal -->
+  <div class="modal hidden" id="contactModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+      <button class="modal-close" id="closeModalBtn" aria-label="Fechar">×</button>
+      <h3 id="contactTitle">Contato</h3>
+
+      <div id="formContainer">
+        <form id="contactForm">
+          <div class="form-row">
+            <label for="contactName">Nome</label>
+            <input type="text" id="contactName" name="name" required />
+          </div>
+          <div class="form-row">
+            <label for="contactEmail">E-mail</label>
+            <input type="email" id="contactEmail" name="email" required />
+          </div>
+          <div class="form-row">
+            <label for="contactMessage">Mensagem</label>
+            <textarea id="contactMessage" name="message" rows="4" required></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" id="contactCancel">Cancelar</button>
+            <button type="submit" class="btn-primary">Enviar</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="success-message" id="successMessage">Mensagem enviada com sucesso!</div>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div class="modal hidden" id="registerModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="registerTitle">
+      <button class="modal-close" id="registerClose" aria-label="Fechar">×</button>
+      <h3 id="registerTitle">Cadastro</h3>
+
+      <div id="registerContainer">
+        <form id="registerForm">
+          <div class="form-row">
+            <label for="regName">Nome completo</label>
+            <input type="text" id="regName" name="name" required />
+          </div>
+          <div class="form-row">
+            <label for="regEmail">E-mail</label>
+            <input type="email" id="regEmail" name="email" required />
+          </div>
+          <div class="form-row">
+            <label for="regPassword">Senha</label>
+            <input type="password" id="regPassword" name="password" required />
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" id="registerCancel">Cancelar</button>
+            <button type="submit" class="btn-primary">Cadastrar</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="success-message" id="registerSuccess">Cadastro realizado com sucesso!</div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="modal hidden" id="loginModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+      <button class="modal-close" id="loginClose" aria-label="Fechar">×</button>
+      <h3 id="loginTitle">Entrar</h3>
+
+      <div id="loginContainer">
+        <form id="loginForm">
+          <div class="form-row">
+            <label for="loginEmail">E-mail</label>
+            <input type="email" id="loginEmail" name="email" required />
+          </div>
+          <div class="form-row">
+            <label for="loginPassword">Senha</label>
+            <input type="password" id="loginPassword" name="password" required />
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" id="loginCancel">Cancelar</button>
+            <button type="submit" class="btn-primary">Entrar</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="success-message" id="loginSuccess">Login realizado com sucesso!</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-main">
+        <div class="footer-copyright">© 2025 FUT RJ</div>
+        
+        <div class="social-links">
+          <!-- YouTube -->
+          <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+          <!-- Facebook -->
+          <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+          <!-- Pinterest -->
+          <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.90.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.920-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.748-1.378 0 0-.599 2.282-.744 2.840-.282 1.084-1.064 2.456-1.549 3.235C9.584 23.815 10.77 24.001 12.017 24.001c6.624 0 11.99-5.367 11.99-11.987C24.007 5.367 18.641.001 12.017.001z"/>
+          </svg>
+          <!-- Twitter/X -->
+          <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="footer-made-with">
+        <span>Made with</span>
+        <div class="whimsical-logo"></div>
+        <span>Whimsical</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Dark mode toggle
+    const darkToggle = document.getElementById('darkToggle');
+    const moonIcon = document.getElementById('moonIcon');
+    const sunIcon = document.getElementById('sunIcon');
+    const body = document.body;
+
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (isDarkMode) {
+      body.classList.add('dark');
+      moonIcon.classList.add('hidden');
+      sunIcon.classList.remove('hidden');
+    }
+
+    darkToggle.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      if (body.classList.contains('dark')) {
+        moonIcon.classList.add('hidden');
+        sunIcon.classList.remove('hidden');
+        localStorage.setItem('darkMode', 'true');
+      } else {
+        moonIcon.classList.remove('hidden');
+        sunIcon.classList.add('hidden');
+        localStorage.setItem('darkMode', 'false');
+      }
+    });
+
+    // Abrir / fechar sidebar da Tabela
+    const tabelaBtn = document.getElementById('tabelaBtn');
+    const tabelaSidebar = document.getElementById('tabelaSidebar');
+
+    tabelaBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      tabelaSidebar.classList.toggle('open');
+    });
+
+    // Fechar sidebar clicando fora dela
+    document.addEventListener('click', (e) => {
+      if (!tabelaSidebar.contains(e.target) && !tabelaBtn.contains(e.target)) {
+        tabelaSidebar.classList.remove('open');
+      }
+    });
+
+    // Times menu
+    const timesMenuBtn = document.getElementById('timesMenuBtn');
+    const timesDropdown = document.getElementById('timesDropdown');
+    timesMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      timesDropdown.classList.toggle('hidden');
+    });
+    document.addEventListener('click', (e) => {
+      if (!timesMenuBtn.contains(e.target)) {
+        timesDropdown.classList.add('hidden');
+      }
+    });
+
+    // Contact modal
+    const contactBtn = document.getElementById('contactBtn');
+    const contactModal = document.getElementById('contactModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const contactForm = document.getElementById('contactForm');
+    const formContainer = document.getElementById('formContainer');
+    const successMessage = document.getElementById('successMessage');
+    const contactCancel = document.getElementById('contactCancel');
+
+    contactBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      contactModal.classList.remove('hidden');
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      contactModal.classList.add('hidden');
+      formContainer.classList.remove('hidden');
+      successMessage.style.display = 'none';
+      contactForm.reset();
+    });
+
+    contactCancel.addEventListener('click', () => {
+      closeModalBtn.click();
+    });
+
+    contactModal.addEventListener('click', (e) => {
+      if (e.target === contactModal) {
+        contactModal.classList.add('hidden');
+        formContainer.classList.remove('hidden');
+        successMessage.style.display = 'none';
+        contactForm.reset();
+      }
+    });
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      formContainer.classList.add('hidden');
+      successMessage.style.display = 'block';
+      setTimeout(() => {
+        contactModal.classList.add('hidden');
+        formContainer.classList.remove('hidden');
+        successMessage.style.display = 'none';
+        contactForm.reset();
+      }, 2000);
+    });
+
+    // Register modal
+    const registerBtn = document.getElementById('registerBtn');
+    const registerModal = document.getElementById('registerModal');
+    const registerClose = document.getElementById('registerClose');
+    const registerForm = document.getElementById('registerForm');
+    const registerSuccess = document.getElementById('registerSuccess');
+    const registerCancel = document.getElementById('registerCancel');
+
+    registerBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      registerModal.classList.remove('hidden');
+    });
+
+    registerClose.addEventListener('click', () => {
+      registerModal.classList.add('hidden');
+      registerSuccess.style.display = 'none';
+      registerForm.reset();
+    });
+
+    registerCancel.addEventListener('click', () => {
+      registerClose.click();
+    });
+
+    registerModal.addEventListener('click', (e) => {
+      if (e.target === registerModal) {
+        registerModal.classList.add('hidden');
+        registerSuccess.style.display = 'none';
+        registerForm.reset();
+      }
+    });
+
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      registerForm.style.display = 'none';
+      registerSuccess.style.display = 'block';
+      setTimeout(() => {
+        registerModal.classList.add('hidden');
+        registerForm.style.display = '';
+        registerSuccess.style.display = 'none';
+        registerForm.reset();
+      }, 2000);
+    });
+
+    // Login modal
+    const loginBtn = document.getElementById('loginBtn');
+    const loginModal = document.getElementById('loginModal');
+    const loginClose = document.getElementById('loginClose');
+    const loginForm = document.getElementById('loginForm');
+    const loginSuccess = document.getElementById('loginSuccess');
+    const loginCancel = document.getElementById('loginCancel');
+
+    loginBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      loginModal.classList.remove('hidden');
+    });
+
+    loginClose.addEventListener('click', () => {
+      loginModal.classList.add('hidden');
+      loginSuccess.style.display = 'none';
+      loginForm.reset();
+    });
+
+    loginCancel.addEventListener('click', () => {
+      loginClose.click();
+    });
+
+    loginModal.addEventListener('click', (e) => {
+      if (e.target === loginModal) {
+        loginModal.classList.add('hidden');
+        loginSuccess.style.display = 'none';
+        loginForm.reset();
+      }
+    });
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      loginForm.style.display = 'none';
+      loginSuccess.style.display = 'block';
+      setTimeout(() => {
+        loginModal.classList.add('hidden');
+        loginForm.style.display = '';
+        loginSuccess.style.display = 'none';
+        loginForm.reset();
+      }, 2000);
+    });
+
+    // Fechar todos os modais com ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        [contactModal, registerModal, loginModal].forEach(modal => {
+          if (!modal.classList.contains('hidden')) {
+            modal.classList.add('hidden');
+          }
         });
-
-        // Validação do formulário
-        function validateForm() {
-            let isValid = true;
-
-            // Limpar todos os erros
-            Object.keys(inputs).forEach(clearError);
-
-            // Validar nome
-            if (!inputs.nome.value.trim()) {
-                showError('nome', 'Nome é obrigatório');
-                isValid = false;
-            } else if (inputs.nome.value.trim().length < 3) {
-                showError('nome', 'Nome deve ter pelo menos 3 caracteres');
-                isValid = false;
-            }
-
-            // Validar email
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!inputs.email.value.trim()) {
-                showError('email', 'Email é obrigatório');
-                isValid = false;
-            } else if (!emailRegex.test(inputs.email.value)) {
-                showError('email', 'Email inválido');
-                isValid = false;
-            }
-
-            // Validar telefone
-            const telefoneRegex = /^\d{10,11}$/;
-            const telefoneLimpo = inputs.telefone.value.replace(/\D/g, '');
-            if (!inputs.telefone.value.trim()) {
-                showError('telefone', 'Telefone é obrigatório');
-                isValid = false;
-            } else if (!telefoneRegex.test(telefoneLimpo)) {
-                showError('telefone', 'Telefone deve ter 10 ou 11 dígitos');
-                isValid = false;
-            }
-
-            // Validar senha
-            if (!inputs.senha.value) {
-                showError('senha', 'Senha é obrigatória');
-                isValid = false;
-            } else if (inputs.senha.value.length < 6) {
-                showError('senha', 'Senha deve ter pelo menos 6 caracteres');
-                isValid = false;
-            }
-
-            // Validar confirmação de senha
-            if (!inputs.confirmarSenha.value) {
-                showError('confirmarSenha', 'Confirmação de senha é obrigatória');
-                isValid = false;
-            } else if (inputs.senha.value !== inputs.confirmarSenha.value) {
-                showError('confirmarSenha', 'As senhas não coincidem');
-                isValid = false;
-            }
-
-            return isValid;
-        }
-
-        // Submit do formulário
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            if (!validateForm()) {
-                showToast('Por favor, corrija os erros no formulário', 'error');
-                return;
-            }
-
-            // Desabilitar botão
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Cadastrando...';
-
-            // Simular envio
-            setTimeout(() => {
-                showToast('Cadastro realizado com sucesso!', 'success');
-                form.reset();
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Cadastrar';
-            }, 1000);
-        });
-    </script>
+      }
+    });
+  </script>
 </body>
 </html>
